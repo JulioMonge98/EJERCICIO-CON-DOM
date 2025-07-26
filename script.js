@@ -9,13 +9,13 @@ const btnCambiarFondo = document.getElementById("btnCambiarFondo");
 // Cargar lista guardada al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
   const datosGuardados = JSON.parse(localStorage.getItem("asistencia")) || [];
-  datosGuardados.forEach(nombre => agregarAlumno(nombre));
+  datosGuardados.forEach(nombreCompleto => agregarAlumno(nombreCompleto));
 });
 
 // Función para agregar un alumno a la lista
-function agregarAlumno(nombre) {
+function agregarAlumno(nombreCompleto) {
   const nuevoItem = document.createElement("li");
-  nuevoItem.textContent = nombre;
+  nuevoItem.textContent = nombreCompleto;
   nuevoItem.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
 
   const btnEliminar = document.createElement("button");
@@ -40,13 +40,16 @@ function guardarAsistencia() {
 
 // Registrar nuevo alumno
 btnRegistrar.addEventListener("click", () => {
-  const nombre = inputNombre.value.trim();
-  if (nombre === "") {
-    alert("Por favor, escribe el nombre del alumno.");
+  const nombre = nombres.value.trim();
+    const apellido = apellidos.value.trim();
+  if (nombre === "" && apellido === "") {
+    alert("Por favor, rellene los campos.");
     return;
   }
-  agregarAlumno(nombre);
-  inputNombre.value = "";
+  const nombreCompleto = `${nombre} ${apellido}`
+  agregarAlumno(nombreCompleto);
+  nombres.value = "";
+  apellidos.value = "";
 });
 
 // Eliminar toda la lista
